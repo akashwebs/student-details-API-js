@@ -66,3 +66,13 @@ const diaplayDetails = (data, id) => {
         }
     })
 }
+
+// remove student
+
+studentDetailsContainer.addEventListener('click', e => {
+    if (e.target.innerText.toLowerCase() != 'remove') {
+
+    } else {
+        e.target.parentNode.parentNode.parentNode.style.display = "none";
+    }
+})
