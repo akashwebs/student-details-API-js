@@ -1,9 +1,13 @@
 const serachInput = document.getElementById('search-value');
 const serachButton = document.getElementById('serach-button');
+const studentDetailsContainer = document.getElementById('student-details-container');
+const studentDetails = document.getElementById('student-details');
+
 serachButton.addEventListener('click', async function() {
 
     if (serachInput.value == null || serachInput.value.length == 0) {
         alert('pelase input wrong')
+        studentDetailsContainer.innerHTML = ''
     } else {
         const res = await fetch('https://jsonplaceholder.typicode.com/photos');
         const data = await res.json();
@@ -12,9 +16,9 @@ serachButton.addEventListener('click', async function() {
     }
     serachInput.value = ''
 })
-const studentDetailsContainer = document.getElementById('student-details-container');
 const displayResult = data => {
     studentDetailsContainer.innerHTML = ''
+    studentDetails.innerHTML = ''
     if (data.length == 0) {
         console.log('no data found')
     } else {
@@ -40,5 +44,25 @@ const displayResult = data => {
     }
 }
 const seeDetails = (id) => {
-    console.log(id);
+
+    fetch('https://jsonplaceholder.typicode.com/photos')
+        .then(res => res.json())
+        .then(data => diaplayDetails(data, id))
+}
+const diaplayDetails = (data, id) => {
+    studentDetails.innerHTML = ''
+    studentDetailsContainer.innerHTML = ''
+    data.forEach(data => {
+        if (data.id === id) {
+            const div = document.createElement('div');
+            div.className = "card";
+            div.innerHTML = `
+                <img src="${data.thumbnailUrl}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text">${data.title}</p>
+                </div>
+            `
+            studentDetails.appendChild(div)
+        }
+    })
 }
